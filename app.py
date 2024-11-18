@@ -6,6 +6,11 @@ import requests
 
 app = FastAPI()
 
+# Добавляем обработчик для корневого пути
+@app.get("/")
+async def root():
+    return {"message": "Hello, World!"}
+
 # Получаем API ключи из переменных окружения
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 newsapi_key = os.environ.get("NEWSAPI_KEY")
