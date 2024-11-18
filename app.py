@@ -6,20 +6,6 @@ import requests
 
 app = FastAPI()
 
-# Добавляем обработчик для корневого пути
-@app.get("/")
-async def root():
-    return {"message": "Hello, World!"}
-
-@app.head("/")
-async def head_root():
-    return {"message": "Hello, World!"}
-
-# Если хочется отклонить POST-запросы на корень
-@app.post("/")
-async def post_root():
-    raise HTTPException(status_code=405, detail="POST-запросы на корень не разрешены")
-
 # Получаем API ключи из переменных окружения
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 newsapi_key = os.environ.get("NEWSAPI_KEY")
