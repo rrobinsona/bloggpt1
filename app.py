@@ -36,7 +36,7 @@ def generate_post(topic):
     prompt_title = f"Придумайте привлекательный заголовок для поста на тему: {topic}"
     try:
         response_title = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             messages=[{"role": "user", "content": prompt_title}],
             max_tokens=50,
             n=1,
@@ -68,7 +68,7 @@ def generate_post(topic):
     )
     try:
         response_post = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             messages=[{"role": "user", "content": prompt_post}],
             max_tokens=1000,
             n=1,
