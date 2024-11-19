@@ -6,6 +6,10 @@ import requests
 
 app = FastAPI()
 
+@app.get("/heartbeat")
+async def heartbeat_api():
+    return {"status": "OK"}
+
 # Получаем API ключи из переменных окружения
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 newsapi_key = os.environ.get("NEWSAPI_KEY")
