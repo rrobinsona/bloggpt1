@@ -50,7 +50,7 @@ def generate_post(topic):
     prompt_meta = f"Напишите краткое, но информативное мета-описание для поста с заголовком: {title}"
     try:
         response_meta = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             messages=[{"role": "user", "content": prompt_meta}],
             max_tokens=100,
             n=1,
