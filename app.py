@@ -84,6 +84,10 @@ def generate_post(topic):
         "post_content": post_content
     }
 
+@app.get("/")
+async def root():
+    return {"message": "Сервер работает!"}
+
 @app.post("/generate-post")
 async def generate_post_api(topic: Topic):
     generated_post = generate_post(topic.topic)
