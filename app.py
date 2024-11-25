@@ -15,10 +15,13 @@ if not openai.api_key:
 if not newsapi_key:
     raise ValueError("Переменная окружения NEWSAPI_KEY не установлена")
 
+
 class Topic(BaseModel):
     topic: str
 
+
 def get_recent_news(topic):
+    """Получает последние новости по теме из NewsAPI."""
     url = f"https://newsapi.org/v2/everything?q={topic}&apiKey={newsapi_key}"
     response = requests.get(url)
     if response.status_code != 200:
@@ -29,7 +32,9 @@ def get_recent_news(topic):
     recent_news = [article["title"] for article in articles[:1]]
     return "\n".join(recent_news)
 
+
 def generate_post(topic):
+    """Генерирует пост с использованием OpenAI и последних новостей."""
     recent_news = get_recent_news(topic)
 
     # Генерация заголовка
@@ -84,14 +89,32 @@ def generate_post(topic):
         "post_content": post_content
     }
 
+
 @app.get("/")
 async def root():
-    return {"message": "Сервер работает!"}
+    """GET-запрос на корневой путь."""
+    return {"message": "Сервер работает! Используйте POST-запросы для обработки данных."}
+
+
+@app.post("/")
+async def handle_post_request(topic: Topic):
+    """
+    Обрабатывает POST-запросы на корневом пути `/`.
+    Позволяет использовать корневой путь для генерации постов.
+    """
+    generated_post = generate_post(topic.topic)
+    return generated_post
+
 
 @app.post("/generate-post")
 async def generate_post_api(topic: Topic):
+    """
+    Отдельный путь для генерации постов.
+    Может использоваться, если нужно разделить обработку.
+    """
     generated_post = generate_post(topic.topic)
     return generated_post
+
 
 if __name__ == "__main__":
     import uvicorn
