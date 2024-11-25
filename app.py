@@ -89,10 +89,6 @@ async def generate_post_api(topic: Topic):
     generated_post = generate_post(topic.topic)
     return generated_post
 
-@app.get("/heartbeat")
-async def heartbeat_api():
-    return {"status": "OK"}
-
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("app:app", host="0.0.0.0", port=8000)
